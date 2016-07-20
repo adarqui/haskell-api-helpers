@@ -7,7 +7,7 @@
 {-# OPTIONS -fno-warn-orphans #-}
 
 module Haskell.Api.Helpers (
-  SpecificApiOptions,
+  SpecificApiOptions (..),
   defaultSpecificApiOptions,
   handleError,
   getAt,
