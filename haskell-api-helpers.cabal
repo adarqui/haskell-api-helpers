@@ -32,6 +32,7 @@ library
                      , text
                      , transformers
                      , wreq
+                     , haskell-api-helpers-shared
   ghc-options:         -Wall -Werror
   default-language:    Haskell2010
 
