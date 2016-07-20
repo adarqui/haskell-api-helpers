@@ -7,7 +7,8 @@
 {-# OPTIONS -fno-warn-orphans #-}
 
 module Haskell.Api.Helpers (
-  defaultWreqOptions,
+  SpecificApiOptions,
+  defaultSpecificApiOptions,
   handleError,
   getAt,
   postAt,
@@ -43,16 +44,20 @@ import qualified Network.Wreq.Types         as WreqTypes (Options (..), manager)
 
 
 
+type SpecificApiOptions = WreqTypes.Options
+
+
+
 settings :: Conduit.ManagerSettings
 settings = Conduit.mkManagerSettings (Network.TLSSettingsSimple True False False) Nothing
 
 
 
 instance Default WreqTypes.Options where
-  def = defaultWreqOptions
+  def = defaultSpecificApiOptions
 
-defaultWreqOptions :: WreqTypes.Options
-defaultWreqOptions = defaults {
+defaultSpecificApiOptions :: WreqTypes.Options
+defaultSpecificApiOptions = defaults {
   WreqTypes.manager = Left settings -- Left tlsManagerSettings
 }
 
