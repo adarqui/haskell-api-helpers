@@ -4,7 +4,7 @@
 {-# LANGUAGE KindSignatures        #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE OverloadedStrings     #-}
-{-# OPTIONS -fno-warn-orphans #-}
+{-# OPTIONS -fno-warn-orphans      #-}
 
 module Haskell.Api.Helpers (
   SpecificApiOptions,
