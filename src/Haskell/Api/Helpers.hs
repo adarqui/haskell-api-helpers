@@ -41,6 +41,7 @@ import           Network.Wreq               (Options, Response, defaults,
                                              postWith, putWith, responseBody,
                                              responseStatus, statusCode)
 import qualified Network.Wreq.Types         as WreqTypes (Options (..), manager)
+import           Prelude
 
 
 
