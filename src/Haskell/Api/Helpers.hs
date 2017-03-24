@@ -32,7 +32,8 @@ import           Data.String.Conversions    (cs)
 import           Data.Text                  (Text)
 import           Haskell.Api.Helpers.Shared
 import qualified Network.Connection         as Network (TLSSettings (..))
-import           Network.HTTP.Client        (HttpException (..))
+import           Network.HTTP.Client        (HttpException (..), HttpExceptionContent (..))
+import qualified Network.HTTP.Client        as HTTPClient (responseHeaders, responseStatus)
 import qualified Network.HTTP.Conduit       as Conduit (ManagerSettings,
                                                         mkManagerSettings)
 import           Network.HTTP.Types.Status  (status500, statusMessage)
@@ -106,16 +107,19 @@ internalAction
   -> m RawApiResult
 internalAction act = liftIO ((act >>= properResponse) `catch` handler)
   where
-  handler (StatusCodeException s headers _) =
+  handler (HttpExceptionRequest _ (StatusCodeException response _)) = do
      -- This basically makes this library specific to my ln-* project.
-     -- It looks for the X-jSON-ERROR header, and if it is set, returns
+     -- It looks for the X-JSON-ERROR header, and if it is set, returns
      -- that message. This message may then be a JSON string, which can give us
      -- more detailed error information.
      --
-     case find ((==) "X-jSON-ERROR" . fst) headers of
-       Nothing        -> pure $ Left (s, cs $ statusMessage s)
-       Just (_, body) -> pure $ Left (s, cs body)
-  handler _                                 = pure $ Left (status500, "wreq")
+     let
+       headers = HTTPClient.responseHeaders (response :: Response ())
+       status  = HTTPClient.responseStatus (response :: Response ())
+     case find ((==) "X-JSON-ERROR" . fst) headers of
+       Nothing        -> pure $ Left (status, cs $ statusMessage status)
+       Just (_, body) -> pure $ Left (status, cs body)
+  handler _ = pure $ Left (status500, "wreq")
 
 
 
