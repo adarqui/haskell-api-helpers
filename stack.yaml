@@ -2,5 +2,6 @@ flags: {}
 packages:
 - .
 - ../haskell-api-helpers-shared
-extra-deps: []
+extra-deps:
+- http-client-0.5.14
 resolver: lts-8.5

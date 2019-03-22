@@ -32,8 +32,10 @@ import           Data.String.Conversions    (cs)
 import           Data.Text                  (Text)
 import           Haskell.Api.Helpers.Shared
 import qualified Network.Connection         as Network (TLSSettings (..))
-import           Network.HTTP.Client        (HttpException (..), HttpExceptionContent (..))
-import qualified Network.HTTP.Client        as HTTPClient (responseHeaders, responseStatus)
+import           Network.HTTP.Client        (HttpException (..),
+                                             HttpExceptionContent (..))
+import qualified Network.HTTP.Client        as HTTPClient (responseHeaders,
+                                                           responseStatus)
 import qualified Network.HTTP.Conduit       as Conduit (ManagerSettings,
                                                         mkManagerSettings)
 import           Network.HTTP.Types.Status  (status500, statusMessage)
